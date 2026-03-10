@@ -1,16 +1,33 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-
 import { MdOutlineDashboard } from "react-icons/md";
-import { useSession } from "next-auth/react";
+import { MdLightMode, MdDarkMode } from "react-icons/md";
 import NavLink from "../buttons/NavLink";
 import Logo from "./Logo";
 import AuthButtons from "../buttons/AuthButtons";
 
-
 const Navbar = () => {
+  const [theme, setTheme] = useState(() => {
+    // Initialize from localStorage or default to devinsight
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("theme") || "devinsight";
+    }
+    return "devinsight";
+  });
+
+  useEffect(() => {
+    // Apply theme to document
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "devinsight" ? "devinsight-dark" : "devinsight";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+  };
+
   const nav = (
     <>
       <li>
@@ -19,7 +36,6 @@ const Navbar = () => {
       <li>
         <NavLink href={"/aboutUs"}>About US</NavLink>
       </li>
-
     </>
   );
 
@@ -57,13 +73,20 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{nav}</ul>
       </div>
       <div className="navbar-end space-x-4">
-        <Link href={"/dashboard"} className="btn btn-primary">
-          {" "}
-          <MdOutlineDashboard
-            size={25}
-            className="font-black"
-          ></MdOutlineDashboard>{" "}
-        </Link>
+        {/* Theme Toggle */}
+        <label className="swap swap-rotate btn btn-ghost btn-circle hover:bg-transparent border-none focus:outline-none">
+          <input
+            type="checkbox"
+            checked={theme === "devinsight-dark"}
+            onChange={toggleTheme}
+            className="hidden"
+          />
+          {/* Sun icon */}
+          <MdLightMode className="swap-off fill-primary w-6 h-6" />
+          {/* Moon icon */}
+          <MdDarkMode className="swap-on fill-primary w-6 h-6" />
+        </label>
+
         <AuthButtons></AuthButtons>
       </div>
     </div>

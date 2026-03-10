@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
   return (
     <NextAuthProvider>
       <html lang="en">
-        <body className={`${poppins.className} antialiased bg-blue-50`} suppressHydrationWarning={true}>
+        <body className={`${poppins.className} antialiased bg-base-100`} suppressHydrationWarning={true}>
           {children}
         </body>
       </html>

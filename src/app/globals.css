@@ -112,3 +112,38 @@
 ========================= */
 
 @custom-variant dark (&:where([data-theme=devinsight-dark], [data-theme=devinsight-dark] *));
+
+/* =========================
+   Button Focus Override
+========================= */
+
+.btn:focus-visible {
+  outline: 2px solid oklch(var(--p));
+  outline-offset: 2px;
+}
+
+.btn-primary:focus-visible {
+  outline-color: oklch(var(--p));
+}
+
+.btn-outline:focus-visible {
+  outline-color: oklch(var(--p));
+}
+
+/* Remove black border on hover/focus */
+.btn {
+  border-color: transparent;
+}
+
+.btn-primary {
+  border-color: oklch(var(--p));
+}
+
+.btn-outline {
+  border-color: oklch(var(--p));
+}
+
+.btn-outline:hover {
+  border-color: oklch(var(--p));
+  background-color: oklch(var(--p));
+}

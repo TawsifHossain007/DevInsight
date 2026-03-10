@@ -1,13 +1,13 @@
 "use client";
 
-import { signOut, useSession } from "next-auth/react";
-import Image from "next/image";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
+import { MdDashboard } from "react-icons/md";
 import Swal from "sweetalert2";
 
 const AuthButtons = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const user = session?.user;
 
   const handleLogout = async () => {
@@ -16,82 +16,60 @@ const AuthButtons = () => {
       title: "Logged Out",
       text: "See you soon!",
       icon: "success",
-      confirmButtonColor: "oklch(62% 0.14 230)"
+      confirmButtonColor: "oklch(62% 0.18 265)",
     });
+  };
+
+  const handleLogin = async () => {
+    try {
+      await signIn("github", { 
+        callbackUrl: "/dashboard",
+        redirect: true 
+      });
+    } catch (error) {
+      console.error("Login error:", error);
+      Swal.fire({
+        title: "Login Failed",
+        text: "Something went wrong. Please try again.",
+        icon: "error",
+        confirmButtonColor: "oklch(62% 0.18 265)",
+      });
+    }
   };
 
   return (
     <div>
-      {status === "authenticated" ? (
-        <div className="flex items-center gap-3">
-          {/* Avatar Dropdown */}
-          {user && (
-            <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle avatar"
-              >
-                <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                  <Image src={user.image} alt="User Avatar" width={40} height={40} />
-                </div>
-              </div>
+      {user ? (
+        <>
 
-              <ul
-                tabIndex={0}
-                className="dropdown-content z-999 menu p-4 shadow-lg bg-base-100 rounded-xl w-72 
-                backdrop-blur-lg border border-base-300"
-              >
-                <li className="text-center flex flex-col items-center">
-                  <Image
-                    src={user.image}
-                    className="w-24 h-24 rounded-full ring ring-primary ring-offset-base-200 ring-offset-2 mb-2"
-                    alt="User"
-                    width={96}
-                    height={96}
-                  />
-
-                  <h3 className="font-bold text-lg text-secondary">
-                    {user.name}
-                  </h3>
-                  <span
-                    className={`badge ${
-                      user.role === "admin"
-                        ? "badge-primary"
-                        : user.role === "user"
-                          ? "badge-ghost"
-                          : "badge-info"
-                    } font-semibold capitalize`}
-                  >
-                    {user.role}
-                  </span>
-                  <p className="text-sm opacity-70">{user.email}</p>
-                </li>
-
-                <div className="divider"></div>
-
-                <li>
-                  <button
-                    onClick={handleLogout}
-                    className="btn btn-primary btn-outline w-full"
-                  >
-                    Logout
-                  </button>
-                </li>
-                <Link
-                  href={"/dashboard/myProfile"}
-                  className="btn btn-primary btn-outline w-full mt-2"
-                >
-                  My Profile
-                </Link>
-              </ul>
-            </div>
-          )}
-        </div>
+          <button
+            className="btn btn-primary text-white rounded-xl px-6 border-none"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        </>
       ) : (
-        <Link href="/login" className="btn btn-primary btn-outline">
-          Login
-        </Link>
+        <>
+          <button
+            onClick={handleLogin}
+            className="btn btn-primary rounded-xl text-white px-6 border-none"
+          >
+            <svg
+              aria-label="GitHub logo"
+              width="16"
+              height="16"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="white"
+                d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z"
+              ></path>
+            </svg>
+            Login with GitHub
+          </button>
+        </>
       )}
     </div>
   );

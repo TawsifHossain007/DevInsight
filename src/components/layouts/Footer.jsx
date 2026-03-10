@@ -4,16 +4,16 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="footer footer-horizontal footer-center text-base-content rounded bg-base-300 p-10 mt-20">
+    <footer className="footer footer-horizontal footer-center text-neutral rounded bg-base-200 p-10 mt-20">
       {/* Navigation Links */}
       <nav className="grid grid-flow-col gap-4">
-        <Link href={"/blogs"} className="link link-hover">
+        <Link href={"/blogs"} className="link link-hover text-neutral hover:text-primary">
           Blogs
         </Link>
-        <Link href={"/about"} className="link link-hover">
+        <Link href={"/about"} className="link link-hover text-neutral hover:text-primary">
           About us
         </Link>
-        <Link href={"/contact"} className="link link-hover">
+        <Link href={"/contact"} className="link link-hover text-neutral hover:text-primary">
           Contact us
         </Link>
       </nav>
@@ -26,6 +26,7 @@ const Footer = () => {
             href="https://x.com/tawsif_hos62406"
             target="_blank"
             rel="noopener noreferrer"
+            className="hover:text-primary transition-colors"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -40,9 +41,10 @@ const Footer = () => {
 
           {/* Instagram */}
           <a
-            href="https://www.instagram.com/the_hossain_shaheb/" // <-- Replace with your Instagram profile
+            href="https://www.instagram.com/the_hossain_shaheb/"
             target="_blank"
             rel="noopener noreferrer"
+            className="hover:text-primary transition-colors"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -55,11 +57,12 @@ const Footer = () => {
             </svg>
           </a>
 
-          {/* LinkedIn (unchanged) */}
+          {/* LinkedIn */}
           <a
             href="https://www.linkedin.com/in/tawsif-hossain007/"
             target="_blank"
             rel="noopener noreferrer"
+            className="hover:text-primary transition-colors"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +79,7 @@ const Footer = () => {
 
       {/* Copyright */}
       <aside>
-        <p>
+        <p className="text-neutral">
           Copyright © {new Date().getFullYear()} - All rights reserved by CareNest
           Industries Ltd
         </p>

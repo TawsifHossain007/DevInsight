@@ -21,14 +21,6 @@ export default function Sidebar() {
     <div className="flex min-h-full flex-col items-start bg-white is-drawer-close:w-14 is-drawer-open:w-64">
       <ul className="menu w-full grow">
         <li>
-          <Link
-            href="/"
-            className="flex items-center gap-3 is-drawer-close:tooltip is-drawer-close:tooltip-right"
-            data-tip="Homepage"
-          >
-            <FaArrowLeft />
-            <span className="is-drawer-close:hidden">HomePage</span>
-          </Link>
 
           <Link
             href="/dashboard"

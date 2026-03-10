@@ -31,7 +31,7 @@ const DashboardLayout = ({ children }) => {
               </svg>
             </label>
             <div className="px-4 font-bold text-2xl text-white">
-              CareNest Dashboard
+              DevInsight Dashboard
             </div>
           </nav>
           <div className="p-4">{children}</div>
