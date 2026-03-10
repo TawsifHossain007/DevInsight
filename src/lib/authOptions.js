@@ -1,4 +1,4 @@
-import { LoginUser } from "@/actions/server/Auth";
+// import { LoginUser } from "@/actions/server/Auth";
 import { collections, dbConnect } from "@/lib/dbConnect";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
@@ -9,10 +9,10 @@ export const authOptions = {
       name: "Credentials",
       credentials: {},
       async authorize(credentials) {
-        const user = await LoginUser({
-          email: credentials.email,
-          password: credentials.password,
-        });
+        // const user = await LoginUser({
+        //   email: credentials.email,
+        //   password: credentials.password,
+        // });
         return user;
       },
     }),
