@@ -1,26 +1,114 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@plugin "daisyui" {
+  themes: devinsight --default, devinsight-dark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* =========================
+   DevInsight Light Theme
+========================= */
+
+@plugin "daisyui/theme" {
+  name: "devinsight";
+  default: true;
+
+  /* Brand Colors */
+  --color-primary: oklch(62% 0.18 265);   /* Dev Indigo */
+  --color-secondary: oklch(60% 0.14 230); /* Code Blue */
+  --color-accent: oklch(70% 0.18 180);    /* Analytics Cyan */
+
+  /* Base Backgrounds */
+  --color-base-100: oklch(100% 0 0);      /* white */
+  --color-base-200: oklch(97% 0.01 260);  /* light dashboard bg */
+  --color-base-300: oklch(92% 0.015 260); /* borders */
+
+  /* Text + UI */
+  --color-neutral: oklch(28% 0.02 260);   /* main text */
+  --color-neutral-content: oklch(98% 0 0);
+
+  /* Feedback */
+  --color-success: oklch(68% 0.18 150);   /* commit success green */
+  --color-error: oklch(60% 0.22 25);      /* error red */
+  --color-warning: oklch(75% 0.18 90);    /* warning */
+  --color-info: oklch(66% 0.16 220);      /* info blue */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* =========================
+   DevInsight Dark Theme
+========================= */
+
+@plugin "daisyui/theme" {
+  name: "devinsight-dark";
+
+  /* Brand Colors */
+  --color-primary: oklch(70% 0.2 265);
+  --color-secondary: oklch(68% 0.16 230);
+  --color-accent: oklch(72% 0.18 180);
+
+  /* Base */
+  --color-base-100: oklch(18% 0.02 260);  /* main dark bg */
+  --color-base-200: oklch(22% 0.02 260);
+  --color-base-300: oklch(28% 0.02 260);
+
+  /* Text */
+  --color-neutral: oklch(90% 0 0);
+  --color-neutral-content: oklch(20% 0.01 260);
+
+  /* Feedback */
+  --color-success: oklch(70% 0.18 150);
+  --color-error: oklch(65% 0.22 25);
+  --color-warning: oklch(78% 0.18 90);
+  --color-info: oklch(70% 0.18 220);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* =========================
+   Layout Utilities
+========================= */
+
+.section-spacing {
+  @apply py-20 px-6;
 }
+
+.section-spacing-alt {
+  @apply py-20 px-6 bg-base-200;
+}
+
+/* Dashboard layout spacing */
+
+.dashboard-spacing {
+  @apply p-6 md:p-8;
+}
+
+/* =========================
+   Professional Animations
+========================= */
+
+.transition-professional {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.card-hover {
+  @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+}
+
+/* =========================
+   Data Visualization Styles
+========================= */
+
+/* Chart containers */
+
+.chart-card {
+  @apply bg-base-100 border border-base-300 rounded-xl p-6 shadow-sm;
+}
+
+/* Metric cards */
+
+.metric-card {
+  @apply bg-base-100 border border-base-300 rounded-xl p-5 shadow-sm flex flex-col gap-2;
+}
+
+/* =========================
+   Future Dark Mode Variant
+========================= */
+
+@custom-variant dark (&:where([data-theme=devinsight-dark], [data-theme=devinsight-dark] *));
