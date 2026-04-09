@@ -8,12 +8,20 @@ export const authOptions = {
       clientSecret: process.env.GITHUB_SECRET,
       authorization: {
         params: {
-          scope: 'read:user user:email'
+          scope: 'read:user user:email repo'
         }
       }
     }),
   ],
   callbacks: {
+    async jwt({ token, account, profile }) {
+      // Persist the OAuth access_token to the token right after signin
+      if (account) {
+        token.accessToken = account.access_token
+        token.githubId = profile.id
+      }
+      return token
+    },
     async signIn({ user, account, profile }) {
       if (account.provider === "github") {
         try {
@@ -40,7 +48,7 @@ export const authOptions = {
             { upsert: true }
           )
 
-          console.log('✅ User saved to database:', userData.username)
+          console.log('✅ User saved to database');
           return true
         } catch (error) {
           console.error("❌ Error saving user to database:", error)
@@ -50,10 +58,13 @@ export const authOptions = {
       return true
     },
     async session({ session, token }) {
-      if (token.sub) {
+      // Send properties to the client
+      session.accessToken = token.accessToken
+      
+      if (token.githubId) {
         try {
           const usersCollection = await dbConnect(collections.USERS)
-          const user = await usersCollection.findOne({ githubId: parseInt(token.sub) })
+          const user = await usersCollection.findOne({ githubId: parseInt(token.githubId) })
           if (user) {
             session.user.id = user._id.toString()
             session.user.githubId = user.githubId

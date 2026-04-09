@@ -5,6 +5,8 @@ dns.setServers(['8.8.8.8', '1.1.1.1']);
 
 export const collections = {
     USERS: 'users',
+    REPOSITORIES: 'repositories',
+    COMMITS: 'commits',
 };
 
 let client;
